@@ -77,6 +77,7 @@ app.post('/token', async (req, res) => {
   res.send('ok');
 });
 
+// TODO: send push notification to devices based on userId
 app.post('/push', async (req, res) => {
     const { to, notification, data } = req.body;
 
