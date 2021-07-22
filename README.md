@@ -4,31 +4,47 @@ Download your Firebase secrets https://firebase.google.com/docs/admin/setup#set-
 
 Place the `secret.json` file in project `root` directory.  
 
+Create `.env` file and add mongo DB endpoint to `DATABASE_URL=`
+
 ```
 npm install
 npm run dev
 ```
 
-Push notification endpoint
+Store device token:
 
 ```
-POST http://localhost:8080/send
-```
+POST localhost:8080/api/v1/token
 
-payload 
-
-```
+// payload
 {
-    "token":"bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
-    "notification":{
-      "title":"Portugal vs. Denmark",
-      "body":"great match!"
-    },
-    // For data transfer notification
-     "data":{
-      "Nick" : "Mario",
-      "body" : "great match!",
-      "Room" : "PortugalVSDenmark"
+    "token": "someToken"
+}
+```
+
+Assign user to device token
+
+```
+PUT localhost:8080/api/v1/token/someToken
+
+//payload
+{
+    "userId": "123"
+}
+```
+
+Send push notification
+
+```
+POST localhost:8080/api/v1/push
+
+// payload
+{
+    "userId": "123",
+    "projectId": "someproject",
+    "event": {
+        "template": "QANDA_INSTANT_POST_SUBMITTED_QUESTION",
+        "templateParams": {}
     }
 }
 ```
