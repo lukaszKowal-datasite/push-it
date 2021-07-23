@@ -1,6 +1,7 @@
 export interface NotificationEvent {
     userId: string;
     projectId: string;
+    languageCode?: string;
     event: Event;
 }
 

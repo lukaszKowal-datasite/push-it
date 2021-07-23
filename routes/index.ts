@@ -1,5 +1,6 @@
 import express from 'express';
 import admin from 'firebase-admin';
+import i18next from 'i18next';
 import { mongoClient } from '..';
 import { NotificationEvent } from '../interfaces/NotificationEvent';
 
@@ -22,6 +23,9 @@ router.post('/push', async (req, res) => {
 
     await mongoClient.close();
 
+    const userLanguage = notificationEvent.languageCode ?? 'en';
+    await i18next.changeLanguage(userLanguage);
+
     const deviceTokens = userDeviceTokens.map(dt => dt.token);
         
     let title = '';
@@ -32,8 +36,8 @@ router.post('/push', async (req, res) => {
 
     switch (template) {
         case 'QANDA_INSTANT_POST_SUBMITTED_QUESTION':
-            title = 'Whohoho you have a question';
-            body = 'Check this out';
+            title = i18next.t('pns_newQuestion');
+            body = i18next.t('pns_qandaPostSubmitted');
         break;
     }
 
