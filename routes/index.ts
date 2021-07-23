@@ -42,13 +42,13 @@ router.post('/push', async (req, res) => {
     }
 
     try {
-        const response = await admin.messaging().send({
+        const response = await admin.messaging().sendMulticast({
             notification: {
                 title,
                 body,
             },
             data,
-            token: deviceTokens[0],
+            tokens: deviceTokens,
         });
 
         console.log('Successfully sent message:', response);
